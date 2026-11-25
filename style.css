@@ -1,21 +1,14 @@
-/* ============================================================
-   SKY — Bullet Journal Digital
-   style.css — Estilos completos: layout, tipografía, componentes
-   ============================================================ */
+﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ─── Importar fuente ─────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
-/* ─── Variables de diseño ─────────────────────────────────── */
 :root {
-  /* Fondos */
+  
   --bg-base:        #0a0e14;
   --bg-surface:     #111827;
   --bg-elevated:    #1a2235;
   --bg-card:        #1e2a3a;
   --bg-overlay:     rgba(10, 14, 20, 0.80);
 
-  /* ── Glassmorphism tokens ───────────────────────────────── */
+  
   --glass-bg:         rgba(17, 24, 39, 0.55);
   --glass-bg-heavy:   rgba(10, 14, 20, 0.72);
   --glass-bg-card:    rgba(26, 34, 53, 0.50);
@@ -28,43 +21,42 @@
   --glass-blur-md:    blur(20px);
   --glass-blur-lg:    blur(36px);
 
-  /* Bordes */
+  
   --border-subtle:  #1e2a3a;
   --border-default: #2d3f55;
   --border-accent:  rgba(16, 185, 129, 0.35);
 
-  /* Acento — Verde esmeralda */
+  
   --accent:         #10b981;
   --accent-glow:    rgba(16, 185, 129, 0.18);
   --accent-bright:  #34d399;
   --accent-dim:     #065f46;
 
-  /* Texto */
+  
   --text-primary:   #e6edf3;
   --text-secondary: #8b949e;
   --text-muted:     #4a5568;
   --text-accent:    #10b981;
 
-  /* Estado */
+  
   --success:        #10b981;
   --warning:        #f59e0b;
   --danger:         #ef4444;
 
-  /* Tipografía */
+  
   --font-sans:  'Inter', system-ui, sans-serif;
   --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Espaciado */
+  
   --radius-sm:  8px;
   --radius-md:  14px;
   --radius-lg:  20px;
   --radius-xl:  28px;
 
-  /* Transiciones */
+  
   --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ─── Reset & Base ────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -85,7 +77,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  /* Fondo con blobs de color para dar 'sustancia' al blur glassmorphism */
+  
   background-image:
     radial-gradient(ellipse 70% 50% at 10% 20%, rgba(16, 185, 129, 0.10) 0%, transparent 60%),
     radial-gradient(ellipse 60% 40% at 85% 70%, rgba(16, 185, 129, 0.07) 0%, transparent 60%),
@@ -93,7 +85,6 @@ body {
   background-attachment: fixed;
 }
 
-/* ─── Scrollbar personalizado ─────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-surface); }
 ::-webkit-scrollbar-thumb {
@@ -102,22 +93,17 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* ─── Selección de texto ──────────────────────────────────── */
 ::selection {
   background: var(--accent-glow);
   color: var(--accent-bright);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   LAYOUT PRINCIPAL
-═══════════════════════════════════════════════════════════ */
 .app-shell {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* ─── Top Header ──────────────────────────────────────────── */
 .top-bar {
   position: sticky;
   top: 0;
@@ -163,7 +149,6 @@ body {
   color: var(--accent);
 }
 
-/* Selector de mes */
 .month-selector {
   display: flex;
   align-items: center;
@@ -172,7 +157,7 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: 6px 14px;
-  /* Sin backdrop-filter propio: top-bar ya tiene blur máximo */
+  
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -210,7 +195,6 @@ body {
   text-align: center;
 }
 
-/* Acciones del header */
 .header-actions {
   display: flex;
   align-items: center;
@@ -222,7 +206,7 @@ body {
   height: 36px;
   border: 1px solid var(--glass-border);
   background: rgba(255, 255, 255, 0.05);
-  /* Sin backdrop-filter: dentro del top-bar que ya tiene blur máximo */
+  
   color: var(--text-secondary);
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -239,14 +223,12 @@ body {
   background: var(--accent-glow);
 }
 
-/* ─── Layout de contenido ─────────────────────────────────── */
 .content-layout {
   display: flex;
   flex: 1;
   gap: 0;
 }
 
-/* ─── Sidebar ─────────────────────────────────────────────── */
 .sidebar {
   width: 220px;
   flex-shrink: 0;
@@ -291,7 +273,7 @@ body {
 .nav-item:hover {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
-  /* Sin backdrop-filter: el sidebar ya lo tiene — evita capas GPU extra */
+  
 }
 
 .nav-item.active {
@@ -326,16 +308,14 @@ body {
   margin: 10px 12px;
 }
 
-/* ─── Área principal ──────────────────────────────────────── */
 .main-content {
   flex: 1;
   padding: 28px 32px;
   overflow-y: auto;
   max-width: 100%;
-  contain: layout style;   /* aisla repaints al scroll — mejora rendimiento */
+  contain: layout style;   
 }
 
-/* ─── Page header ─────────────────────────────────────────── */
 .page-header {
   margin-bottom: 28px;
 }
@@ -370,7 +350,6 @@ body {
   margin-top: 4px;
 }
 
-/* ─── Stats rápidas ───────────────────────────────────────── */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -426,9 +405,6 @@ body {
 .stat-change.up   { color: var(--accent); }
 .stat-change.down { color: var(--danger); }
 
-/* ═══════════════════════════════════════════════════════════
-   SECCIÓN: NOTAS DIARIAS DEL MES
-═══════════════════════════════════════════════════════════ */
 .section-block {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -479,7 +455,6 @@ body {
   letter-spacing: 0.04em;
 }
 
-/* Grid de días */
 .days-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -494,7 +469,7 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   padding: 10px 13px;
-  /* Sin backdrop-filter: está dentro de section-block que ya tiene blur */
+  
   transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
   position: relative;
   overflow: hidden;
@@ -605,9 +580,6 @@ body {
   color: var(--text-primary);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SECCIÓN: TABLA DE HÁBITOS / METAS
-═══════════════════════════════════════════════════════════ */
 .habits-grid-header {
   display: grid;
   gap: 6px;
@@ -652,12 +624,11 @@ body {
   color: var(--accent);
 }
 
-/* ─── Fila de hábito ─────────────────────────────────────── */
 .habit-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 4px;                    /* padding lateral para que el highlight sea visible */
+  padding: 7px 4px;                    
   border-bottom: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   transition: background 0.15s ease;
@@ -665,9 +636,8 @@ body {
 
 .habit-row:last-child { border-bottom: none; }
 
-/* Hover de fila: realce mínimo, sin oscurecer las celdas */
 .habit-row:hover {
-  background: rgba(255, 255, 255, 0.02);   /* barely-there highlight */
+  background: rgba(255, 255, 255, 0.02);   
 }
 
 .habit-name {
@@ -695,16 +665,15 @@ body {
   gap: 4px;
   flex: 1;
   overflow-x: auto;
-  padding-bottom: 2px;                 /* espacio para que el glow no se corte */
+  padding-bottom: 2px;                 
 }
 
-/* ─── Celda base: siempre visible, borde sutil ──────────── */
 .habit-cell {
   width: 22px;
   height: 22px;
   border-radius: 4px;
-  border: 1px solid var(--border-default);  /* borde más visible que border-subtle */
-  background: var(--bg-card);               /* un tono más claro que bg-elevated */
+  border: 1px solid var(--border-default);  
+  background: var(--bg-card);               
   cursor: pointer;
   flex-shrink: 0;
   position: relative;
@@ -719,18 +688,16 @@ body {
     transform    0.1s ease;
 }
 
-/* ─── Hover vacía: borde encendido, fondo casi transparente ─ */
 .habit-cell:hover {
   border-color: var(--accent);
-  background: var(--bg-card);              /* mantiene el mismo fondo, NO oscurece */
+  background: var(--bg-card);              
   box-shadow:
-    0 0 0 2px rgba(16, 185, 129, 0.20),   /* anillo exterior suave */
-    inset 0 0 0 1px rgba(16, 185, 129, 0.12); /* tinte interior apenas perceptible */
-  transform: scale(1.08);                  /* micro-escala para feedback táctil */
+    0 0 0 2px rgba(16, 185, 129, 0.20),   
+    inset 0 0 0 1px rgba(16, 185, 129, 0.12); 
+  transform: scale(1.08);                  
   z-index: 1;
 }
 
-/* ─── Celda marcada: verde sólido + glow ───────────────── */
 .habit-cell.done {
   background: var(--accent);
   border-color: var(--accent);
@@ -744,14 +711,12 @@ body {
   color: #fff;
 }
 
-/* Hover sobre celda ya marcada: overlay blanco muy sutil */
 .habit-cell.done:hover {
-  background: #12c98d;                     /* verde ligeramente más claro */
+  background: #12c98d;                     
   box-shadow: 0 0 12px rgba(16, 185, 129, 0.65);
   transform: scale(1.08);
 }
 
-/* ─── Días futuros: apagados, sin interacción ───────────── */
 .habit-cell.future {
   opacity: 0.25;
   cursor: not-allowed;
@@ -762,7 +727,6 @@ body {
   transform: none;
 }
 
-/* Botón agregar hábito */
 .add-habit-btn {
   display: flex;
   align-items: center;
@@ -786,9 +750,6 @@ body {
   background: var(--accent-glow);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   BARRA INFERIOR (Mobile Nav)
-═══════════════════════════════════════════════════════════ */
 .bottom-nav {
   display: none;
   position: fixed;
@@ -796,7 +757,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  /* Pill glass — estilo iOS */
+  
   background: var(--glass-bg-heavy);
   backdrop-filter: var(--glass-blur-lg);
   -webkit-backdrop-filter: var(--glass-blur-lg);
@@ -842,7 +803,6 @@ body {
   background: rgba(16, 185, 129, 0.14);
 }
 
-/* ─── Toast notification ──────────────────────────────────── */
 .toast-container {
   position: fixed;
   bottom: 80px;
@@ -885,7 +845,6 @@ body {
 
 .toast.hiding { animation: fadeOut 0.2s ease forwards; }
 
-/* ─── Loader / Splash ─────────────────────────────────────── */
 .splash {
   position: fixed;
   inset: 0;
@@ -954,7 +913,6 @@ body {
   to   { width: 100%; }
 }
 
-/* ─── Utilidades ──────────────────────────────────────────── */
 .visually-hidden {
   position: absolute;
   width: 1px; height: 1px;
@@ -965,9 +923,6 @@ body {
   border-width: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE — Tablet & Mobile
-═══════════════════════════════════════════════════════════ */
 @media (max-width: 1024px) {
   .stats-row {
     grid-template-columns: repeat(2, 1fr);
@@ -988,7 +943,7 @@ body {
   }
 
   .main-content {
-    padding: 18px 16px 110px; /* extra bottom para la pill nav flotante */
+    padding: 18px 16px 110px; 
   }
 
   .top-bar {
@@ -1037,15 +992,10 @@ body {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   PASO 2 — NUEVOS ESTILOS
-═══════════════════════════════════════════════════════════ */
-
-/* .habit-name extendido: añade flex-wrap y position para el botón eliminar */
 .habit-name {
   flex-wrap: nowrap;
   position: relative;
-  width: 160px;       /* asegurar ancho consistente */
+  width: 160px;       
 }
 
 .habit-name-text {
@@ -1098,7 +1048,6 @@ body {
   color: var(--danger);
 }
 
-/* ─── Estado vacío de hábitos ─────────────────────────────── */
 .habits-empty-state {
   display: flex;
   flex-direction: column;
@@ -1114,7 +1063,6 @@ body {
   opacity: 0.5;
 }
 
-/* ─── Revisión Mensual ────────────────────────────────────── */
 .review-stats {
   margin-bottom: 20px;
 }
@@ -1136,7 +1084,6 @@ body {
   margin-bottom: 0;
 }
 
-/* ─── Contenedor del gráfico Chart.js ─────────────────────── */
 .chart-container {
   position: relative;
   width: 100%;
@@ -1158,7 +1105,6 @@ body {
   font-size: 0.85rem;
 }
 
-/* ─── Responsive revisión ─────────────────────────────────── */
 @media (max-width: 768px) {
   .chart-container {
     min-height: 180px;
@@ -1169,12 +1115,6 @@ body {
   }
 }
 
-
-/* ═══════════════════════════════════════════════════════════
-   PASO 4 — TAREAS, OBJETIVOS, IDEAS, BÚSQUEDA, AJUSTES
-═══════════════════════════════════════════════════════════ */
-
-/* ─── Estado vacío compartido ─────────────────────────────── */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -1189,7 +1129,6 @@ body {
 .empty-icon { font-size: 2.4rem; opacity: 0.45; }
 .empty-sub  { font-size: 0.78rem; opacity: 0.7; }
 
-/* ─── Botón primario de agregar ──────────────────────────── */
 .primary-add-btn {
   padding: 8px 16px;
   background: var(--accent);
@@ -1211,7 +1150,6 @@ body {
 }
 .primary-add-btn:active { transform: translateY(0); }
 
-/* ─── Fila de agregar tarea ──────────────────────────────── */
 .task-add-row {
   display: flex;
   gap: 8px;
@@ -1228,7 +1166,7 @@ body {
   font-family: var(--font-sans);
   font-size: 0.87rem;
   outline: none;
-  /* Sin backdrop-filter: dentro de section-block glass */
+  
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .task-input-field:focus {
@@ -1237,7 +1175,6 @@ body {
 }
 .task-input-field::placeholder { color: var(--text-muted); }
 
-/* ─── Filtros de tareas ──────────────────────────────────── */
 .filter-tabs {
   display: flex;
   gap: 6px;
@@ -1246,7 +1183,7 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
   padding: 4px;
-  /* Sin backdrop-filter: dentro de section-block glass */
+  
 }
 .filter-tab {
   flex: 1;
@@ -1264,7 +1201,6 @@ body {
 .filter-tab:hover  { color: var(--text-secondary); background: rgba(255,255,255,0.04); }
 .filter-tab.active { background: var(--accent); color: #0d1117; }
 
-/* ─── Ítem de tarea / objetivo ─────────────────────────── */
 .task-item {
   display: flex;
   align-items: center;
@@ -1274,7 +1210,7 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
   margin-bottom: 6px;
-  /* Sin backdrop-filter: dentro de section-block glass */
+  
   transition: background 0.15s ease, border-color 0.15s ease, opacity 0.2s ease;
   animation: slideInItem 0.2s ease forwards;
 }
@@ -1286,7 +1222,6 @@ body {
 .task-item.done  { opacity: 0.55; }
 .task-item:last-child { margin-bottom: 0; }
 
-/* Checkbox circular */
 .task-check {
   width: 20px;
   height: 20px;
@@ -1306,7 +1241,6 @@ body {
 .task-check:hover   { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(16,185,129,0.15); }
 .task-check.checked { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 8px rgba(16,185,129,0.4); }
 
-/* Texto de tarea */
 .task-text {
   flex: 1;
   font-size: 0.87rem;
@@ -1316,7 +1250,6 @@ body {
 }
 .task-text.done { text-decoration: line-through; color: var(--text-muted); }
 
-/* Botón eliminar ítem */
 .item-delete-btn {
   width: 22px;
   height: 22px;
@@ -1337,7 +1270,6 @@ body {
 .task-item:hover .item-delete-btn { opacity: 1; }
 .item-delete-btn:hover { background: rgba(239,68,68,0.15); color: var(--danger); }
 
-/* ─── Objetivos: grupos y badges ────────────────────────── */
 .goal-add-row { flex-wrap: wrap; }
 .goal-type-select {
   background: var(--bg-elevated);
@@ -1383,7 +1315,6 @@ body {
 .goal-item { gap: 12px; }
 .goal-content { flex: 1; min-width: 0; }
 
-/* ─── Ideas Sueltas ─────────────────────────────────────── */
 .idea-add-area {
   display: flex;
   flex-direction: column;
@@ -1403,7 +1334,7 @@ body {
   line-height: 1.6;
   resize: vertical;
   outline: none;
-  /* Sin backdrop-filter: dentro de section-block glass */
+  
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
 }
@@ -1423,7 +1354,7 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   padding: 14px 16px;
-  /* Sin backdrop-filter: dentro de section-block glass */
+  
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   animation: fadeInUp 0.25s ease forwards;
@@ -1472,7 +1403,6 @@ body {
   margin: 0;
 }
 
-/* ─── Modales compartidos ─────────────────────────────────── */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1535,7 +1465,6 @@ body {
 }
 .modal-close-btn:hover { background: rgba(239,68,68,0.1); border-color: var(--danger); color: var(--danger); }
 
-/* ─── Búsqueda ───────────────────────────────────────────── */
 .search-panel { max-width: 700px; }
 
 .search-modal-header {
@@ -1637,7 +1566,6 @@ body {
 }
 .search-no-results strong { color: var(--text-secondary); }
 
-/* Resaltado de búsqueda */
 mark {
   background: rgba(16,185,129,0.3);
   color: var(--accent);
@@ -1645,7 +1573,6 @@ mark {
   padding: 0 1px;
 }
 
-/* ─── Ajustes ────────────────────────────────────────────── */
 .settings-panel {
   max-width: 520px;
   max-height: 86vh;
@@ -1677,7 +1604,7 @@ mark {
   background: var(--glass-bg-light);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
-  /* Sin backdrop-filter: dentro del modal-panel glass */
+  
   cursor: pointer;
   text-align: left;
   transition: all 0.15s ease;
@@ -1722,7 +1649,6 @@ mark {
   line-height: 1.8;
 }
 
-/* ─── Responsive nuevas secciones ───────────────────────── */
 @media (max-width: 768px) {
   .ideas-grid    { grid-template-columns: 1fr 1fr; }
   .goal-add-row  { flex-direction: column; align-items: stretch; }
@@ -1739,9 +1665,6 @@ mark {
   .primary-add-btn { width: 100%; justify-content: center; }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ESTILOS DE IMPRESIÓN / EXPORTACIÓN A PDF
-═══════════════════════════════════════════════════════════ */
 @media print {
   :root {
     --bg-main:     #ffffff !important;
@@ -1754,7 +1677,7 @@ mark {
     --text-muted:     #64748b !important;
     --accent:         #059669 !important;
     --accent-glow:    rgba(5, 150, 105, 0.08) !important;
-    /* Nullify glass tokens for print */
+    
     --glass-bg:         #f8fafc !important;
     --glass-bg-heavy:   #ffffff !important;
     --glass-bg-card:    #ffffff !important;
@@ -1768,7 +1691,7 @@ mark {
     --glass-blur-lg:    none !important;
   }
 
-  /* Ocultar todos los controles, barras y elementos interactivos */
+  
   .top-bar,
   .sidebar,
   .bottom-nav,
@@ -1789,7 +1712,7 @@ mark {
     display: none !important;
   }
 
-  /* Reset del layout de la página */
+  
   body, html {
     background: #ffffff !important;
     color: #0f172a !important;
@@ -1826,7 +1749,7 @@ mark {
     overflow: visible !important;
   }
 
-  /* Cabecera de la página */
+  
   .page-header {
     border-bottom: 2px solid #0f172a !important;
     margin-bottom: 20pt !important;
@@ -1844,7 +1767,7 @@ mark {
     font-size: 11pt !important;
   }
 
-  /* Bloques de sección */
+  
   .section-block {
     break-inside: avoid;
     page-break-inside: avoid;
@@ -1865,13 +1788,13 @@ mark {
     border: 1px solid #94a3b8 !important;
   }
 
-  /* Forzar colores de fondo de gráficos/celdas */
+  
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* 📓 Notas Diarias */
+  
   .days-grid {
     display: flex !important;
     flex-direction: column !important;
@@ -1929,7 +1852,7 @@ mark {
     padding: 0 !important;
   }
 
-  /* ✅ Hábitos y Metas (Escalar para que quepa en papel) */
+  
   .habits-section-inner {
     overflow-x: visible !important;
   }
@@ -2016,7 +1939,7 @@ mark {
     opacity: 0.4 !important;
   }
 
-  /* 📋 Tareas y 🎯 Objetivos */
+  
   .task-item {
     break-inside: avoid;
     page-break-inside: avoid;
@@ -2051,7 +1974,7 @@ mark {
     font-weight: 700 !important;
   }
 
-  /* 💡 Ideas Sueltas (2 columnas de tarjetas limpias) */
+  
   .ideas-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
@@ -2081,7 +2004,7 @@ mark {
     line-height: 1.4 !important;
   }
 
-  /* 📊 Revisión Mensual */
+  
   .review-stats {
     display: grid !important;
     grid-template-columns: 1fr 1fr 1fr 1fr !important;
@@ -2114,7 +2037,7 @@ mark {
     margin-bottom: 20pt !important;
   }
   .chart-container {
-    height: 220px !important; /* Fijar alto para el canvas del gráfico en impresión */
+    height: 220px !important; 
   }
 
   .progress-bar-track {
@@ -2130,7 +2053,7 @@ mark {
     font-size: 8.5pt !important;
   }
 
-  /* Glass => opaco en impresión */
+  
   .section-block,
   .stat-card,
   .day-entry,
@@ -2145,11 +2068,6 @@ mark {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   GLASSMORPHISM — Refinements finales
-═══════════════════════════════════════════════════════════ */
-
-/* Animación de los blobs del fondo */
 @keyframes blobDrift1 {
   0%, 100% { background-position: 10% 20%; }
   50%       { background-position: 14% 25%; }
@@ -2159,12 +2077,10 @@ mark {
   50%       { background-position: 80% 65%; }
 }
 
-/* Glow verde en el active indicator del sidebar — más brillante con glass */
 .nav-item.active::before {
   box-shadow: 0 0 12px var(--accent), 0 0 4px var(--accent);
 }
 
-/* Shimmer sutil sobre las tarjetas stat al hover */
 .stat-card::after {
   content: '';
   position: absolute;
@@ -2180,8 +2096,6 @@ mark {
 .stat-card { position: relative; overflow: hidden; }
 .stat-card:hover::after { opacity: 1; }
 
-/* El panel de búsqueda y settings ya tienen el glass del .modal-panel,
-   pero necesitan que su fondo interno sea consistente */
 .search-results,
 .settings-section {
   background: transparent;
@@ -2190,7 +2104,6 @@ mark {
   border-bottom-color: var(--glass-border);
 }
 
-/* Bordes de los inputs de hábitos al focus — visible sobre glass */
 .task-input-field:focus,
 .idea-textarea:focus,
 .day-note-input:focus {
@@ -2199,18 +2112,15 @@ mark {
               inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* Goal type select — sin blur propio (dentro de section-block glass) */
 .goal-type-select {
   background: var(--glass-bg-light);
   border-color: var(--glass-border);
 }
 
-/* will-change solo en elementos que realmente se animan/transforman */
 .bottom-nav       { will-change: transform; }
 .modal-overlay    { will-change: opacity; }
 .stat-card        { will-change: transform; }
 
-/* Ajuste responsive: en móvil los modales suben desde abajo como sheets */
 @media (max-width: 768px) {
   .modal-panel {
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;

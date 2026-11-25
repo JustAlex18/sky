@@ -1,12 +1,5 @@
-/**
- * Sky — Bullet Journal Digital
- * app.js — Paso 4: Tareas, Objetivos, Ideas, Búsqueda, Ajustes + todo lo anterior.
- */
-'use strict';
+﻿'use strict';
 
-/* ═══════════════════════════════════════════════════════════
-   CONSTANTES
-═══════════════════════════════════════════════════════════ */
 const MONTHS_ES = [
   'Enero','Febrero','Marzo','Abril','Mayo','Junio',
   'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'
@@ -18,7 +11,7 @@ const STORAGE_KEYS = {
   habits: 'sky_habits',
   cells:  'sky_habit_cells',
   tasks:  'sky_tasks',   // { "2026-07": [{ id, text, done }] }
-  goals:  'sky_goals',   // [{ id, text, type, done, createdAt }]
+  goals:  'sky_goals',
   ideas:  'sky_ideas',   // { "2026-07": [{ id, text, colorIndex, createdAt }] }
 };
 
@@ -45,9 +38,6 @@ const IDEA_ACCENT_COLORS = [
   { bg: 'rgba(6,182,212,0.07)',  border: 'rgba(6,182,212,0.28)',  dot: '#06b6d4' },
 ];
 
-/* ═══════════════════════════════════════════════════════════
-   ESTADO GLOBAL
-═══════════════════════════════════════════════════════════ */
 let state = {
   currentYear:  new Date().getFullYear(),
   currentMonth: new Date().getMonth(),
@@ -61,17 +51,13 @@ let state = {
   ideas:        {},
 };
 
-let consistencyChartInstance = null;  // Gráfica de rendimiento general
+let consistencyChartInstance = null;
 
-/* Debounce utilitario — evita llamadas excesivas en eventos 'input' */
 function debounce(fn, ms = 300) {
   let timer;
   return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), ms); };
 }
 
-/* ═══════════════════════════════════════════════════════════
-   PERSISTENCIA
-═══════════════════════════════════════════════════════════ */
 const Storage = {
   save(key, data) {
     try {
@@ -101,7 +87,6 @@ const Storage = {
     state.goals      = Storage.load(STORAGE_KEYS.goals,  []);
     state.ideas      = Storage.load(STORAGE_KEYS.ideas,  {});
 
-    // Normalizar datos de versiones anteriores (string 'done' → boolean)
     Object.keys(state.habitCells).forEach(mk => {
       Object.keys(state.habitCells[mk]).forEach(hid => {
         Object.keys(state.habitCells[mk][hid]).forEach(d => {
@@ -122,9 +107,6 @@ const Storage = {
   },
 };
 
-/* ═══════════════════════════════════════════════════════════
-   HELPERS DE FECHA
-═══════════════════════════════════════════════════════════ */
 function getMonthKey(year, month) {
   return `${year}-${String(month + 1).padStart(2, '0')}`;
 }
@@ -158,9 +140,6 @@ function setEl(id, value) {
   if (el) el.textContent = value;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   UI — MES Y ESTADÍSTICAS
-═══════════════════════════════════════════════════════════ */
 function updateMonthLabel() {
   const label = `${MONTHS_ES[state.currentMonth]} ${state.currentYear}`;
   ['month-label','diary-badge','habits-badge','review-badge','tasks-badge','ideas-badge']
@@ -191,7 +170,6 @@ function updateStats() {
     if (dayInfo) { dayInfo.textContent = 'días en el mes'; dayInfo.className = 'stat-change'; }
   }
 
-  // Racha
   let streak = 0, cy = n.getFullYear(), cm = n.getMonth(), cd = n.getDate();
   for (let i = 0; i < 120; i++) {
     const cKey = getMonthKey(cy, cm);
@@ -205,9 +183,6 @@ function updateStats() {
   setEl('stat-streak', streak);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SECCIÓN: NOTAS DIARIAS
-═══════════════════════════════════════════════════════════ */
 function renderDaysGrid() {
   const container = document.getElementById('days-grid');
   if (!container) return;
@@ -273,9 +248,6 @@ function autoResizeTextarea(el) {
   el.style.height = Math.min(el.scrollHeight, 80) + 'px';
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SECCIÓN: HÁBITOS
-═══════════════════════════════════════════════════════════ */
 function renderHabitsTable() {
   const { currentYear: y, currentMonth: m } = state;
   const key   = getMonthKey(y, m);
@@ -390,9 +362,6 @@ function deleteHabit(id, name) {
   showToast(`🗑️ "${name}" eliminado`, 'warning');
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SECCIÓN: TAREAS
-═══════════════════════════════════════════════════════════ */
 function renderTasks() {
   const { currentYear: y, currentMonth: m } = state;
   const key    = getMonthKey(y, m);
@@ -408,7 +377,6 @@ function renderTasks() {
   if (!container) return;
   container.innerHTML = '';
 
-  // Badge con pendientes
   const pending = tasks.filter(t => !t.done).length;
   setEl('tasks-badge', pending > 0 ? `${pending} pendiente${pending !== 1 ? 's' : ''}` : 'Al día ✓');
 
@@ -468,9 +436,6 @@ function setTaskFilter(filter) {
   renderTasks();
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SECCIÓN: OBJETIVOS
-═══════════════════════════════════════════════════════════ */
 function renderGoals() {
   const shortList  = document.getElementById('goals-short-list');
   const longList   = document.getElementById('goals-long-list');
@@ -540,13 +505,10 @@ function deleteGoal(id, text) {
   showToast('🗑️ Objetivo eliminado', 'warning');
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SECCIÓN: IDEAS SUELTAS
-═══════════════════════════════════════════════════════════ */
 function renderIdeas() {
   const { currentYear: y, currentMonth: m } = state;
   const key   = getMonthKey(y, m);
-  const ideas = [...(state.ideas[key] || [])].reverse(); // más recientes primero
+  const ideas = [...(state.ideas[key] || [])].reverse();
 
   const grid  = document.getElementById('ideas-grid');
   const empty = document.getElementById('ideas-empty');
@@ -609,9 +571,6 @@ function deleteIdea(id) {
   Storage.saveAll(); renderIdeas();
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SECCIÓN: REVISIÓN MENSUAL
-═══════════════════════════════════════════════════════════ */
 function renderReview() {
   const { currentYear: y, currentMonth: m } = state;
   const key         = getMonthKey(y, m);
@@ -673,13 +632,6 @@ function renderReview() {
   renderConsistencyChart();
 }
 
-
-/* ═══════════════════════════════════════════════════════════
-   GRÁFICA DE RENDIMIENTO GENERAL DIARIO
-   Una sola línea: eje X = días del mes,
-   eje Y = total de hábitos cumplidos ese día (0 … n_hábitos).
-   Los puntos se conectan formando la curva de constancia.
-═══════════════════════════════════════════════════════════ */
 function renderConsistencyChart() {
   const canvas = document.getElementById('consistency-chart');
   if (!canvas || typeof Chart === 'undefined') return;
@@ -697,7 +649,7 @@ function renderConsistencyChart() {
   const nHabits    = state.habits.length;
   const labels     = Array.from({ length: total }, (_, i) => i + 1);
 
-  /* ── Sin hábitos → estado vacío ───────────────────────── */
+  
   if (nHabits === 0) {
     const wrap = canvas.closest('.chart-container');
     if (wrap) wrap.innerHTML = `<div class="chart-empty"><span style="font-size:2rem">📈</span><p>Agrega hábitos para ver el rendimiento.</p></div>`;
@@ -706,9 +658,9 @@ function renderConsistencyChart() {
     return;
   }
 
-  /* ── Calcular: hábitos cumplidos por día ───────────────── */
+  
   const dailyDone = labels.map(day => {
-    if (day > countable) return null;   // días futuros → sin punto
+    if (day > countable) return null;
     let done = 0;
     for (const habit of state.habits) {
       if ((monthCells[habit.id] || {})[day]) done++;
@@ -716,7 +668,7 @@ function renderConsistencyChart() {
     return done;
   });
 
-  /* ── Racha: días consecutivos con ≥1 hábito ───────────── */
+  
   let streak = 0;
   for (let d = countable; d >= 1; d--) {
     const anyDone = state.habits.some(h => (monthCells[h.id] || {})[d]);
@@ -724,18 +676,18 @@ function renderConsistencyChart() {
     else break;
   }
 
-  /* ── Mejor día del mes ───────────────────────────────── */
+  
   const bestDayIdx = dailyDone.reduce((best, v, i) =>
     v !== null && v > (dailyDone[best] ?? -1) ? i : best, 0);
   const bestVal = dailyDone[bestDayIdx] ?? 0;
 
-  /* Promedio diario */
+  
   const filled  = dailyDone.filter(v => v !== null);
   const avgDone = filled.length
     ? (filled.reduce((s, v) => s + v, 0) / filled.length).toFixed(1)
     : 0;
 
-  /* ── Chips de info ──────────────────────────────────── */
+  
   const streakChip = document.getElementById('consistency-streak-chip');
   if (streakChip) {
     if (streak > 0) {
@@ -748,7 +700,7 @@ function renderConsistencyChart() {
   const badge = document.getElementById('consistency-badge');
   if (badge) badge.textContent = `Promedio: ${avgDone} / ${nHabits} hábitos`;
 
-  /* ── Leyenda informativa ────────────────────────────── */
+  
   const legendEl = document.getElementById('consistency-legend');
   if (legendEl) {
     const pct = nHabits > 0 && countable > 0
@@ -767,14 +719,14 @@ function renderConsistencyChart() {
     ).join('');
   }
 
-  /* ── Gradiente bajo la curva ─────────────────────────── */
+  
   const ctx = canvas.getContext('2d');
   const gradient = ctx.createLinearGradient(0, 0, 0, 160);
   gradient.addColorStop(0,   'rgba(16,185,129,0.35)');
   gradient.addColorStop(0.6, 'rgba(16,185,129,0.08)');
   gradient.addColorStop(1,   'rgba(16,185,129,0.00)');
 
-  /* Radios: normal=3, mejor día=7 (amarillo), hoy=5 */
+  
   const radii = dailyDone.map((v, i) => {
     if (v === null) return 0;
     if (i === bestDayIdx && bestVal > 0) return 7;
@@ -862,9 +814,6 @@ function renderConsistencyChart() {
   });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   BÚSQUEDA
-═══════════════════════════════════════════════════════════ */
 function openSearch() {
   const modal = document.getElementById('search-modal');
   if (!modal) return;
@@ -900,7 +849,6 @@ function performSearch(rawQuery) {
 
   const hits = [];
 
-  // Notas diarias (todos los meses)
   Object.keys(state.notes).forEach(mk => {
     Object.entries(state.notes[mk] || {}).forEach(([day, text]) => {
       if (text && text.toLowerCase().includes(q)) {
@@ -910,7 +858,6 @@ function performSearch(rawQuery) {
     });
   });
 
-  // Tareas (todos los meses)
   Object.keys(state.tasks).forEach(mk => {
     (state.tasks[mk] || []).forEach(t => {
       if (t.text.toLowerCase().includes(q)) {
@@ -920,13 +867,11 @@ function performSearch(rawQuery) {
     });
   });
 
-  // Objetivos (globales)
   state.goals.forEach(g => {
     if (g.text.toLowerCase().includes(q))
       hits.push({ section: '🎯 Objetivos', text: g.text, done: g.done, view: 'goals' });
   });
 
-  // Ideas (todos los meses)
   Object.keys(state.ideas).forEach(mk => {
     (state.ideas[mk] || []).forEach(i => {
       if (i.text.toLowerCase().includes(q)) {
@@ -945,7 +890,6 @@ function performSearch(rawQuery) {
     return;
   }
 
-  // Resaltar coincidencias
   const hl = (text, q) => {
     const i = text.toLowerCase().indexOf(q);
     if (i === -1) return escapeHtml(text);
@@ -976,9 +920,6 @@ function performSearch(rawQuery) {
   });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   AJUSTES
-═══════════════════════════════════════════════════════════ */
 function openSettings() {
   const modal = document.getElementById('settings-modal');
   if (!modal) return;
@@ -1055,9 +996,6 @@ function clearAllData() {
   location.reload();
 }
 
-/* ═══════════════════════════════════════════════════════════
-   NAVEGACIÓN — VISTAS
-═══════════════════════════════════════════════════════════ */
 const VIEW_META = {
   diary:  { title: 'Notas del Mes',     subtitle: 'Registro diario' },
   habits: { title: 'Hábitos & Metas',   subtitle: 'Seguimiento mensual' },
@@ -1097,13 +1035,10 @@ function switchView(view) {
   if (mc) mc.scrollTop = 0;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   NAVEGACIÓN — MESES
-═══════════════════════════════════════════════════════════ */
 function changeMonth(delta) {
   flushCurrentNotes();
   Storage.saveAll();
-  // Destruir gráfica antes de cambiar mes para que se reconstruya limpia
+
   if (consistencyChartInstance) { consistencyChartInstance.destroy(); consistencyChartInstance = null; }
   state.currentMonth += delta;
   if (state.currentMonth < 0)  { state.currentMonth = 11; state.currentYear--; }
@@ -1113,9 +1048,6 @@ function changeMonth(delta) {
   showToast(`${delta < 0 ? '◀ ' : ' ▶'} ${MONTHS_ES[state.currentMonth]} ${state.currentYear}`, 'success');
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════════════════════ */
 function showToast(message, type = 'success') {
   const container = document.getElementById('toast-container');
   if (!container) return;
@@ -1126,14 +1058,10 @@ function showToast(message, type = 'success') {
   setTimeout(() => { toast.classList.add('hiding'); setTimeout(() => toast.remove(), 220); }, 2600);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   PREPARACIÓN PARA IMPRESIÓN / EXPORTACIÓN
-═══════════════════════════════════════════════════════════ */
 window.addEventListener('beforeprint', () => {
-  // Guardar notas actuales antes de imprimir para asegurar que todo el texto esté en el DOM
+
   flushCurrentNotes();
 
-  // Forzar que todos los textareas de notas se auto-ajusten a su scrollHeight completo
   document.querySelectorAll('.day-note-input').forEach(ta => {
     ta.style.height = 'auto';
     ta.style.height = ta.scrollHeight + 'px';
@@ -1142,16 +1070,13 @@ window.addEventListener('beforeprint', () => {
 });
 
 window.addEventListener('afterprint', () => {
-  // Restablecer alturas normales y límites después de la impresión
+
   document.querySelectorAll('.day-note-input').forEach(ta => {
     ta.style.maxHeight = '';
     autoResizeTextarea(ta);
   });
 });
 
-/* ═══════════════════════════════════════════════════════════
-   SERVICE WORKER
-═══════════════════════════════════════════════════════════ */
 function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
@@ -1160,13 +1085,9 @@ function registerServiceWorker() {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   INICIALIZACIÓN
-═══════════════════════════════════════════════════════════ */
 function init() {
   Storage.loadAll();
 
-  // Splash → App
   setTimeout(() => {
     const splash = document.getElementById('splash');
     const app    = document.getElementById('app');
@@ -1178,24 +1099,20 @@ function init() {
   updateMonthLabel();
   switchView('diary');
 
-  // ── Mes ──
   document.getElementById('prev-month-btn')?.addEventListener('click', () => changeMonth(-1));
   document.getElementById('next-month-btn')?.addEventListener('click', () => changeMonth(+1));
 
-  // ── Sidebar + Bottom Nav ──
   document.querySelectorAll('[data-view]').forEach(btn => {
     btn.addEventListener('click', () => {
       if (btn.dataset.view) switchView(btn.dataset.view);
     });
   });
 
-  // ── Guardar ──
   document.getElementById('save-btn')?.addEventListener('click', () => {
     flushCurrentNotes(); Storage.saveAll(); updateStats();
     showToast('✅ Todo guardado', 'success');
   });
 
-  // ── TAREAS ──
   document.getElementById('add-habit-btn')?.addEventListener('click', addHabit);
 
   const taskInput = document.getElementById('task-input');
@@ -1206,18 +1123,15 @@ function init() {
     if (tab?.dataset.filter) setTaskFilter(tab.dataset.filter);
   });
 
-  // ── OBJETIVOS ──
   const goalInput = document.getElementById('goal-input');
   document.getElementById('goal-add-btn')?.addEventListener('click', addGoal);
   goalInput?.addEventListener('keydown', e => { if (e.key === 'Enter') addGoal(); });
 
-  // ── IDEAS ──
   document.getElementById('idea-add-btn')?.addEventListener('click', addIdea);
   const ideaInput = document.getElementById('idea-input');
   ideaInput?.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) addIdea(); });
   ideaInput?.addEventListener('input', () => autoResizeTextarea(ideaInput));
 
-  // ── BÚSQUEDA ──
   document.getElementById('search-btn')?.addEventListener('click', openSearch);
   document.getElementById('search-close-btn')?.addEventListener('click', closeSearch);
   document.getElementById('search-input')?.addEventListener('input', e => performSearch(e.target.value));
@@ -1225,7 +1139,6 @@ function init() {
     if (e.target === e.currentTarget) closeSearch();
   });
 
-  // ── AJUSTES ──
   document.getElementById('settings-btn')?.addEventListener('click', openSettings);
   document.getElementById('settings-close-btn')?.addEventListener('click', closeSettings);
   document.getElementById('settings-modal')?.addEventListener('click', e => {
@@ -1242,7 +1155,6 @@ function init() {
   document.getElementById('clear-month-btn')?.addEventListener('click', clearCurrentMonth);
   document.getElementById('clear-all-btn')?.addEventListener('click', clearAllData);
 
-  // ── IMPRESIÓN / PDF ──
   const triggerPrint = () => {
     closeSettings();
     window.print();
@@ -1250,7 +1162,6 @@ function init() {
   document.getElementById('print-btn')?.addEventListener('click', triggerPrint);
   document.getElementById('settings-print-btn')?.addEventListener('click', triggerPrint);
 
-  // ── Atajos de teclado ──
   document.addEventListener('keydown', e => {
     if (e.altKey && e.key === 'ArrowLeft')  changeMonth(-1);
     if (e.altKey && e.key === 'ArrowRight') changeMonth(+1);
@@ -1260,7 +1171,6 @@ function init() {
     if (e.key === 'Escape') { closeSearch(); closeSettings(); }
   });
 
-  // ── Auto-guardado cada 30s ──
   setInterval(() => { flushCurrentNotes(); Storage.saveAll(); }, 30_000);
 
   registerServiceWorker();

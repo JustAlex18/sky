@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -11,20 +11,20 @@
 
   <title>Sky — Bullet Journal Digital</title>
 
-  <!-- Manifest PWA -->
+  
   <link rel="manifest" href="manifest.json" />
 
-  <!-- Estilos -->
+  
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Preconexión Google Fonts -->
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 </head>
 
 <body>
 
-  <!-- ─── Splash Screen ──────────────────────────────────── -->
+  
   <div class="splash" id="splash" role="status" aria-label="Cargando Sky">
     <div class="splash-logo" aria-hidden="true">🌿</div>
     <div class="splash-title">Sky</div>
@@ -34,25 +34,25 @@
     </div>
   </div>
 
-  <!-- ─── App Shell ──────────────────────────────────────── -->
+  
   <div class="app-shell" id="app" hidden>
 
-    <!-- TOP BAR -->
+    
     <header class="top-bar" role="banner">
-      <!-- Brand -->
+      
       <div class="brand">
         <div class="brand-icon" aria-hidden="true">🌿</div>
         <span class="brand-name">Sk<span>y</span></span>
       </div>
 
-      <!-- Selector de mes -->
+      
       <nav class="month-selector" aria-label="Navegación de mes">
         <button class="month-nav-btn" id="prev-month-btn" aria-label="Mes anterior" title="Mes anterior">‹</button>
         <span class="month-label" id="month-label" aria-live="polite">Julio 2026</span>
         <button class="month-nav-btn" id="next-month-btn" aria-label="Mes siguiente" title="Mes siguiente">›</button>
       </nav>
 
-      <!-- Acciones -->
+      
       <div class="header-actions">
         <button class="icon-btn" id="save-btn" aria-label="Guardar notas" title="Guardar">💾</button>
         <button class="icon-btn" id="search-btn" aria-label="Buscar" title="Buscar">🔍</button>
@@ -61,10 +61,10 @@
       </div>
     </header>
 
-    <!-- CONTENT LAYOUT -->
+    
     <div class="content-layout">
 
-      <!-- SIDEBAR -->
+      
       <aside class="sidebar" role="navigation" aria-label="Menú principal">
         <span class="sidebar-section-label">Principal</span>
 
@@ -92,10 +92,10 @@
         </button>
       </aside>
 
-      <!-- MAIN CONTENT -->
+      
       <main class="main-content" id="main-content" role="main">
 
-        <!-- ── PAGE HEADER ─────────────────────────────── -->
+        
         <div class="page-header">
           <h1 class="page-title">
             <span class="page-title-dot" aria-hidden="true"></span>
@@ -106,7 +106,7 @@
           </p>
         </div>
 
-        <!-- ── STATS RÁPIDAS ───────────────────────────── -->
+        
         <div class="stats-row" role="region" aria-label="Estadísticas del mes">
           <div class="stat-card">
             <span class="stat-label">Notas escritas</span>
@@ -130,9 +130,7 @@
           </div>
         </div>
 
-        <!-- ════════════════════════════════════════════════
-             VIEW: NOTAS DIARIAS DEL MES
-        ════════════════════════════════════════════════ -->
+        
         <section class="section-block view-section" id="view-diary" role="region" aria-label="Notas diarias del mes">
           <div class="section-header">
             <h2 class="section-title">
@@ -142,15 +140,13 @@
             <span class="section-badge" id="diary-badge">Julio 2026</span>
           </div>
 
-          <!-- Grid de días — generado por app.js -->
+          
           <div class="days-grid" id="days-grid" role="list" aria-label="Días del mes">
-            <!-- Las entradas de cada día se renderizan dinámicamente -->
+            
           </div>
         </section>
 
-        <!-- ════════════════════════════════════════════════
-             VIEW: HÁBITOS Y METAS MENSUALES
-        ════════════════════════════════════════════════ -->
+        
         <section class="section-block view-section" id="view-habits" role="region" aria-label="Tabla de hábitos y metas" style="display:none;">
           <div class="section-header">
             <h2 class="section-title">
@@ -161,26 +157,26 @@
           </div>
 
           <div class="habits-section-inner">
-            <!-- Cabecera de la tabla -->
+            
             <div class="habit-row-header">
               <div class="habit-name-col">Hábito / Meta</div>
               <div class="habit-days-labels" id="habits-day-labels" aria-hidden="true">
-                <!-- Números 1–31 generados por app.js -->
+                
               </div>
             </div>
 
-            <!-- Filas de hábitos — generadas por app.js -->
+            
             <div id="habits-rows-container">
             </div>
 
-            <!-- Botón agregar hábito -->
+            
             <button class="add-habit-btn" id="add-habit-btn" aria-label="Agregar nuevo hábito">
               <span aria-hidden="true">＋</span> Agregar hábito o meta
             </button>
           </div>
         </section>
 
-        <!-- ════ VIEW: TAREAS ══════════════════════════════════ -->
+        
         <section class="section-block view-section" id="view-tasks"
                  role="region" aria-label="Tareas del mes" style="display:none;">
           <div class="section-header">
@@ -191,7 +187,7 @@
             <span class="section-badge" id="tasks-badge">0 pendientes</span>
           </div>
 
-          <!-- Input nueva tarea -->
+          
           <div class="task-add-row">
             <input type="text" class="task-input-field" id="task-input"
                    placeholder="Escribe una tarea pendiente..." maxlength="120"
@@ -201,17 +197,17 @@
             </button>
           </div>
 
-          <!-- Filtros -->
+          
           <div class="filter-tabs" id="task-filter-tabs" role="tablist" aria-label="Filtrar tareas">
             <button class="filter-tab active" data-filter="all"   role="tab">Todas</button>
             <button class="filter-tab"        data-filter="pending" role="tab">Pendientes</button>
             <button class="filter-tab"        data-filter="done"  role="tab">Completadas</button>
           </div>
 
-          <!-- Lista -->
+          
           <div id="tasks-list" role="list" aria-label="Lista de tareas"></div>
 
-          <!-- Estado vacío -->
+          
           <div id="tasks-empty" class="empty-state" style="display:none;">
             <span class="empty-icon">📋</span>
             <p>Sin tareas para este filtro.</p>
@@ -219,7 +215,7 @@
           </div>
         </section>
 
-        <!-- ════ VIEW: OBJETIVOS ══════════════════════════════ -->
+        
         <section class="section-block view-section" id="view-goals"
                  role="region" aria-label="Objetivos" style="display:none;">
           <div class="section-header">
@@ -229,7 +225,7 @@
             </h2>
           </div>
 
-          <!-- Input nuevo objetivo -->
+          
           <div class="task-add-row goal-add-row">
             <select class="goal-type-select" id="goal-type" aria-label="Tipo de objetivo">
               <option value="short">⚡ Corto plazo</option>
@@ -243,7 +239,7 @@
             </button>
           </div>
 
-          <!-- Corto plazo -->
+          
           <div class="goals-group">
             <div class="goals-group-header">
               <span class="goals-group-badge short">⚡ Corto Plazo</span>
@@ -255,7 +251,7 @@
             </div>
           </div>
 
-          <!-- Largo plazo -->
+          
           <div class="goals-group">
             <div class="goals-group-header">
               <span class="goals-group-badge long">🌟 Largo Plazo</span>
@@ -268,7 +264,7 @@
           </div>
         </section>
 
-        <!-- ════ VIEW: IDEAS SUELTAS ════════════════════════════ -->
+        
         <section class="section-block view-section" id="view-notes"
                  role="region" aria-label="Ideas Sueltas" style="display:none;">
           <div class="section-header">
@@ -279,7 +275,7 @@
             <span class="section-badge" id="ideas-badge">Este mes</span>
           </div>
 
-          <!-- Input nueva idea -->
+          
           <div class="idea-add-area">
             <textarea class="idea-textarea" id="idea-input" rows="3" maxlength="400"
                       placeholder="¿Qué idea tienes? Escríbela aquí... (Ctrl+Enter para guardar)"
@@ -289,10 +285,10 @@
             </button>
           </div>
 
-          <!-- Grid de tarjetas -->
+          
           <div id="ideas-grid" class="ideas-grid" role="list" aria-label="Tarjetas de ideas"></div>
 
-          <!-- Estado vacío -->
+          
           <div id="ideas-empty" class="empty-state" style="display:none;">
             <span class="empty-icon">💡</span>
             <p>Sin ideas este mes.</p>
@@ -303,7 +299,7 @@
         <section class="section-block view-section" id="view-review"
                  role="region" aria-label="Revisión mensual" style="display:none;">
 
-          <!-- Header -->
+          
           <div class="section-header">
             <h2 class="section-title">
               <span class="section-title-icon" aria-hidden="true">📊</span>
@@ -312,14 +308,13 @@
             <span class="section-badge" id="review-badge">Julio 2026</span>
           </div>
 
-          <!-- Estadísticas clave (generadas por app.js) -->
+          
           <div class="stats-row review-stats" id="review-stats-grid"
                role="region" aria-label="Estadísticas de la revisión">
-            <!-- Se renderiza dinámicamente -->
+            
           </div>
 
-
-          <!-- ─── NUEVA: Gráfica de Constancia de Progreso ─── -->
+          
           <div class="section-block review-chart-block" id="consistency-chart-block">
             <div class="section-header" style="margin-bottom:16px;">
               <h3 class="section-title" style="font-size:0.9rem;">
@@ -340,17 +335,17 @@
               <canvas id="consistency-chart"
                       aria-label="Gráfica de constancia de progreso diario"></canvas>
             </div>
-            <!-- Leyenda de colores por hábito -->
+            
             <div id="consistency-legend"
                  style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;"></div>
           </div>
 
         </section>
 
-      </main><!-- /main-content -->
-    </div><!-- /content-layout -->
+      </main>
+    </div>
 
-    <!-- ─── Bottom Nav (Mobile) ──────────────────────── -->
+    
     <nav class="bottom-nav" aria-label="Navegación móvil">
       <div class="bottom-nav-inner">
         <button class="bottom-nav-item active" data-view="diary" aria-label="Notas del mes">
@@ -376,9 +371,9 @@
       </div>
     </nav>
 
-  </div><!-- /app-shell -->
+  </div>
 
-  <!-- ─── Modal: Búsqueda ──────────────────────────────────── -->
+  
   <div class="modal-overlay" id="search-modal" role="dialog" aria-modal="true" aria-label="Buscar en Sky" hidden>
     <div class="modal-panel search-panel">
       <div class="search-modal-header">
@@ -392,7 +387,7 @@
     </div>
   </div>
 
-  <!-- ─── Modal: Ajustes ──────────────────────────────────── -->
+  
   <div class="modal-overlay" id="settings-modal" role="dialog" aria-modal="true" aria-label="Configuración" hidden>
     <div class="modal-panel settings-panel">
       <div class="modal-panel-header">
@@ -400,7 +395,7 @@
         <button class="modal-close-btn" id="settings-close-btn" aria-label="Cerrar configuración">✕</button>
       </div>
 
-      <!-- Datos -->
+      
       <div class="settings-section">
         <h3 class="settings-section-title">💾 Datos</h3>
         <div class="settings-actions">
@@ -429,7 +424,7 @@
         </div>
       </div>
 
-      <!-- Zona de peligro -->
+      
       <div class="settings-section danger-section">
         <h3 class="settings-section-title">⚠️ Zona de Peligro</h3>
         <div class="settings-actions">
@@ -450,7 +445,7 @@
         </div>
       </div>
 
-      <!-- Footer -->
+      
       <div class="settings-footer">
         <p>Sky — Bullet Journal Digital &middot; v3.0</p>
         <p>Glassmorphism Edition · Datos guardados localmente en tu navegador.</p>
@@ -458,13 +453,13 @@
     </div>
   </div>
 
-  <!-- ─── Toast container ──────────────────────────────────── -->
+  
   <div class="toast-container" id="toast-container" role="status" aria-live="polite"></div>
 
-  <!-- ─── Chart.js (CDN) ──────────────────────────────────── -->
+  
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 
-  <!-- ─── App Script ─────────────────────────────────────── -->
+  
   <script src="app.js"></script>
 </body>
 </html>
